@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
             alt="Pet Sitter"
             style={styles.image}
           />
-          <Link to="/login">
+          <Link to="/login-pet-sitter">
             <button style={styles.button}>REGISTER AS A PET SITTER</button>
           </Link>
         </div>
@@ -24,7 +24,9 @@ const HomePage: React.FC = () => {
             alt="Pet Owner"
             style={styles.image}
           />
-          <button style={styles.button}>REGISTER AS A PET OWNER</button>
+          <Link to="/login-pet-owner">
+            <button style={styles.button}>REGISTER AS A PET OWNER</button>
+          </Link>
         </div>
       </div>
     </div>
