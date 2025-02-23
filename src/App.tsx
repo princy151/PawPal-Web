@@ -1,19 +1,69 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import HomePage from './home.tsx';
-import LoginPetSitter from './login_PetSitter.tsx';
-import LoginPetOwner from './login_petowner.tsx';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; // Import QueryClient and QueryClientProvider
+import HomePage from './core/public/pages/home';
+import LoginPetSitter from './core/public/pages/login_petsitter';
+import OwnerLogin from './core/public/pages/login_petowner';
+import RegisterPage from './core/public/pages/register_petowner';
+import Dashboard from './core/public/pages/ownerdashboard';
+import PetSitterDashboard from './core/public/pages/sitterdashboard';
+import SitterRegister from './core/public/pages/register_petsitter';
+import SitterDetails from './core/public/pages/SitterDetails';
+import MyBookings from './core/public/pages/mybookings';
 
-const App: React.FC = () => {
+
+// Create a QueryClient instance
+const queryClient = new QueryClient();
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />,
+  },
+  {
+    path: '/loginowner',
+    element: <OwnerLogin />,
+  },
+  {
+    path: '/loginsitter',
+    element: <LoginPetSitter />,
+  },
+  {
+    path: '/ownerdashboard',
+    element: <Dashboard />,
+  },
+  {
+    path: '/ownerregister',
+    element: <RegisterPage />,
+  },
+  {
+    path: '/sitterregister',
+    element: <SitterRegister />,
+  },
+  {
+    path: '/sitterdashboard',
+    element: <PetSitterDashboard />,
+  },
+  {
+    path: '/sitter-details/:id',
+    element: <SitterDetails />,
+  },
+  {
+    path: '/mybookings',
+    element: <MyBookings />,
+  },
+
+  
+]);
+
+function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login-pet-sitter" element={<LoginPetSitter />} />
-        <Route path="/login-pet-owner" element={<LoginPetOwner />} />
-      </Routes>
-    </Router>
+    <>
+      {/* Wrap the RouterProvider with QueryClientProvider */}
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </>
   );
-};
+}
 
 export default App;
