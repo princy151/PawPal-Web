@@ -1,18 +1,23 @@
 import { useState } from 'react';
-import { FaRegCalendarAlt, FaRegUser, FaPlusCircle, FaEnvelope } from 'react-icons/fa'; // Import icons
+import { FaDog, FaRegUser, FaPaw, FaEnvelope, FaSignOutAlt } from 'react-icons/fa'; // Import icons
 import { motion } from 'framer-motion'; // For animations
 import AvailablePetSitters from './AvailablePetSitters';
-import AppointmentCalendar from './AppointmentCalender';
 import AddPet from './AddPet';
-import Messages from './messages';
+import OwnerBookings from './ownerbookings';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
   const [activeComponent, setActiveComponent] = useState<string>('petSitters'); // State to manage the active component
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/"); // Navigate to the homepage
+  }
 
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-64 h-full bg-[#8B3A2F] text-white p-6"> {/* Sidebar full height and brownish-red background */}
+      <div className="w-64 h-full bg-[#8B3A2F] text-white p-6 flex flex-col"> {/* Sidebar full height and brownish-red background */}
         <h2 className="text-2xl font-semibold mb-8">PawPal</h2>
         <ul>
           <li className="mb-4">
@@ -27,35 +32,37 @@ const Dashboard: React.FC = () => {
           </li>
           <li className="mb-4">
             <motion.button
-              onClick={() => setActiveComponent('appointments')}
-              className="flex items-center space-x-3 p-2 rounded-lg transition-colors duration-300 ease-in-out w-full text-left hover:bg-[#6A2C20]"
-              whileHover={{ scale: 1.05 }} // Hover animation
-            >
-              <FaRegCalendarAlt size={20} />
-              <span>Appointments</span>
-            </motion.button>
-          </li>
-          <li className="mb-4">
-            <motion.button
               onClick={() => setActiveComponent('addPet')}
               className="flex items-center space-x-3 p-2 rounded-lg transition-colors duration-300 ease-in-out w-full text-left hover:bg-[#6A2C20]"
               whileHover={{ scale: 1.05 }} // Hover animation
             >
-              <FaPlusCircle size={20} />
-              <span>Add Pet</span>
+              <FaDog size={20} />
+              <span>Manage Pets</span>
             </motion.button>
           </li>
           <li className="mb-4">
             <motion.button
-              onClick={() => setActiveComponent('messages')}
+              onClick={() => setActiveComponent('bookings')}
               className="flex items-center space-x-3 p-2 rounded-lg transition-colors duration-300 ease-in-out w-full text-left hover:bg-[#6A2C20]"
               whileHover={{ scale: 1.05 }} // Hover animation
             >
-              <FaEnvelope size={20} />
-              <span>Messages</span>
+              <FaPaw size={20} />
+              <span>My Bookings</span>
             </motion.button>
           </li>
         </ul>
+
+        {/* Logout Button */}
+        <div className="mt-auto"> {/* Push logout button to the bottom */}
+          <motion.button
+            onClick={handleLogout}
+            className="flex items-center space-x-3 p-2 rounded-lg transition-colors duration-300 ease-in-out w-full text-left hover:bg-red-700 bg-red-750" // Red background with hover effect
+            whileHover={{ scale: 1.05 }} // Hover animation
+          >
+            <FaSignOutAlt size={20} />
+            <span>Logout</span>
+          </motion.button>
+        </div>
       </div>
 
       {/* Main Content */}
@@ -69,9 +76,8 @@ const Dashboard: React.FC = () => {
           transition={{ duration: 0.5 }}
         >
           {activeComponent === 'petSitters' && <AvailablePetSitters />}
-          {activeComponent === 'appointments' && <AppointmentCalendar />}
           {activeComponent === 'addPet' && <AddPet />}
-          {activeComponent === 'messages' && <Messages />}
+          {activeComponent === 'bookings' && <OwnerBookings />}
         </motion.div>
       </div>
     </div>

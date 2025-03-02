@@ -149,7 +149,7 @@ export const useDeleteBooking = () => {
   return useMutation({
     mutationKey: ["DELETE_BOOKING"],
     mutationFn: (bookingId: string) => {
-      return axios.delete(`http://localhost:3000/api/v1/bookings/${bookingId}`);
+      return axios.delete(`http://localhost:3000/api/v1/booking/${bookingId}`);
     },
   });
 };
@@ -162,6 +162,17 @@ export const useGetBookingsBySitter = (sitterId: string) => {
       return response.data.data;
     },
     enabled: !!sitterId, // This ensures the query is triggered only if sitterId is available
+  });
+};
+
+export const useGetBookingsByOwner = (ownerId: string) => {
+  return useQuery({
+    queryKey: ["GET_BOOKINGS_BY_OWNER", ownerId],
+    queryFn: async () => {
+      const response = await axios.get(`http://localhost:3000/api/v1/booking/owner/${ownerId}`);
+      return response.data.data;
+    },
+    enabled: !!ownerId, // Ensures the query runs only if ownerId is available
   });
 };
 
@@ -220,3 +231,15 @@ export const useToggleOpenBooking = () => {
   });
 };
 
+
+export const useUpdateBookingDates = () => {
+  return useMutation({
+    mutationKey: ["UPDATE_BOOKING_DATES"],
+    mutationFn: (data: { bookingId: string; startDate: string; endDate: string }) => {
+      return axios.put(`http://localhost:3000/api/v1/booking/${data.bookingId}/dates`, {
+        startDate: data.startDate,
+        endDate: data.endDate,
+      });
+    },
+  });
+};

@@ -9,6 +9,7 @@ import PetSitterDashboard from './core/public/pages/sitterdashboard';
 import SitterRegister from './core/public/pages/register_petsitter';
 import SitterDetails from './core/public/pages/SitterDetails';
 import MyBookings from './core/public/pages/mybookings';
+import OwnerBookings from './core/public/pages/ownerbookings';
 
 
 // Create a QueryClient instance
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
     path: '/mybookings',
     element: <MyBookings />,
   },
+
 
   
 ]);
